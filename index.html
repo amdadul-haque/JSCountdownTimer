@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <title>⌛Countdown Timer</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    #container {
+      background-color: #222;
+      color: #fff;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 3rem;
+    }
+
+    .inputs {
+      font-size: 1.2rem;
+    }
+
+    input {
+      width: 100px;
+      padding: 5px 0px;
+      font-size: 1.5rem;
+      text-align: center;
+      margin-left: 1rem;
+    }
+
+    .startBtn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      font-size: 1.3rem;
+      border-radius: 5px;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+
+    /* .startBtn:hover {
+      border: 5px solid #4CAF50;
+      color: #4CAF50;
+      background-color: #fff;
+    } */
+  </style>
+</head>
+
+<body>
+
+  <div id="container">
+    <div class="inputs">
+      <input id="hourInput" type="text" value="00" min="0" placeholder="Hours ">
+      <span>Hour</span>
+      <input id="minInput" type="text" value="00" min="0" placeholder="Minutes ">
+      <span>Min</span>
+      <input id="secInput" type="text" value="00" min="0" placeholder="Seconds ">
+      <span>Sec</span>
+    </div>
+    <button class="startBtn">Start Timer</button>
+    <h1>
+      <span id="hour">00</span> :
+      <span id="min">00</span> :
+      <span id="sec">00</span>
+    </h1>
+    <p id="totalSec"></p>
+  </div>
+
+  <script>
+    const hourSpan = document.getElementById("hour")
+    const minSpan = document.getElementById("min")
+    const secSpan = document.getElementById("sec")
+
+    const secInput = document.getElementById("secInput")
+    const minInput = document.getElementById("minInput")
+    const hourInput = document.getElementById("hourInput")
+
+    const startBtn = document.querySelector(".startBtn")
+
+
+    var countDownValue = 0;
+
+    const countDownTimer = () => {
+      countDownValue--;
+      let hour = Math.floor(countDownValue / 3600)
+      let min = Math.floor((countDownValue / 60)) % 60;
+      let sec = Math.floor(countDownValue % 60);
+
+      secSpan.innerHTML = sec < 10 ? `0${sec}` : sec
+      minSpan.innerHTML = min < 10 ? `0${min}` : min
+      hourSpan.innerHTML = hour < 10 ? `0${hour}` : hour
+
+
+      console.log(typeof (parseInt(secInput.value)))
+
+    }
+
+    const startTimer = () => {
+      const timer = setInterval(() => {
+        if (countDownValue <= 0) {
+          clearInterval(timer)
+        }
+        else {
+          countDownTimer()
+        }
+        console.log(countDownValue)
+      }, 1000);
+    }
+
+    startBtn.addEventListener("click", () => {
+      countDownValue = (parseInt(secInput.value) + parseInt(minInput.value) * 60 + parseInt(hourInput.value) * 3600);
+      startTimer()
+    })
+
+
+
+
+
+  </script>
+</body>
+
+</html>
